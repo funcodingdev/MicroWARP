@@ -154,6 +154,36 @@ volumes:
 docker compose up -d
 ```
 
+### 🧩 1Panel 部署与代理填写
+
+项目提供了 `docker-compose.1panel.yml`，适合在 1Panel 的 `1panel-network` 网络中使用。数据会挂载到当前项目根目录的 `./warp-data`：
+
+```bash
+docker compose -f docker-compose.1panel.yml up -d
+```
+
+如果其他容器也在 `1panel-network` 中，代理接口填写：
+
+```text
+socks5://1panel-microwarp:1080
+```
+
+也可以拆开填写：
+
+```text
+代理类型: SOCKS5
+地址/Host: 1panel-microwarp
+端口/Port: 1080
+用户名/密码: 留空
+```
+
+如果要在宿主机本地或电脑客户端中使用 `127.0.0.1:1080`，需要先在 compose 中额外映射端口：
+
+```yaml
+ports:
+  - "127.0.0.1:1080:1080"
+```
+
 ### ⚙️ 进阶配置：认证与网络连通性优化
 
 MicroWARP 支持通过环境变量进行参数定制：
